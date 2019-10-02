@@ -1,4 +1,6 @@
 var fs = require('fs');
+var stdin = process.stdin;
+var stdout = process.stdout;
 // 打印当前同级目录下的其他文件 同步版本
 // console.log(fs.readdirSync(__dirname));
 
@@ -28,21 +30,22 @@ fs.readdir(process.cwd(), function(err, files){
         console.log(' ' + i + '     \033[90m' + filename + '\033[39m');
       }
   
-      i++;
-  
       // stdin 标准输入 ； stdout 标准输出 ； stderr 标准错误
-      if(i == files.length){
-        console.log('');
-        // process.stdout.write 相比 console.log()多了换行
-        process.stdout.write('   \033[33mEnter your choice: \033[39m');
-        process.stdin.resume();
-        // 设置流编码为utf8，未来支持特殊字符
-        process.stdin.setEncoding('utf8');
+      if(++i == files.length){
+        read();
       } else {
         file(i);
       }
-      
     })
+  }
+
+  function read(){
+    console.log('');
+    // process.stdout.write 相比 console.log()多了换行
+    stdout.write('   \033[33mEnter your choice: \033[39m');
+    stdin.resume();
+    // 设置流编码为utf8，未来支持特殊字符
+    stdin.setEncoding('utf8');
   }
 
   file(0);
