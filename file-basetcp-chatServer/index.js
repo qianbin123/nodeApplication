@@ -5,6 +5,7 @@ var users = [];
   创建服务器
 */
 var server = net.createServer(function(conn){
+  console.log('conn', conn);
   conn.setEncoding('utf-8');
   var nickname;
   conn.write(
@@ -26,7 +27,8 @@ var server = net.createServer(function(conn){
         users[nickname] = conn;
 
         for(var i in users){
-          users[i].write('\033[90m> ' + nickname + ' joined the room\033[39m\n');
+          broadcast('\033[90m> ' + nickname + ' joined the room\033[39m\n');
+          // users[i].write('\033[90m> ' + nickname + ' joined the room\033[39m\n');  //提取
         }
       }
     }else{
@@ -34,7 +36,8 @@ var server = net.createServer(function(conn){
       for(var i in users){
         //确保消息只发给除自己以外的其他用户
         if(i != nickname){
-          users[i].write('\033[96m> ' + nickname + ':\033[39m' + data + '\n');
+          broadcast('\033[96m> ' + nickname + ':\033[39m' + data + '\n', true);
+          // users[i].write('\033[96m> ' + nickname + ':\033[39m' + data + '\n');  //提取
         }
       }
     }
@@ -42,6 +45,8 @@ var server = net.createServer(function(conn){
 
   conn.on('close', function(){
     count--;
+    delete users[nickname];
+    broadcast('\033[90m> ' + nickname + ' left the room\033[39m\n');
   })
   // 处理连接
   console.log('\033[90m 新连接 \033[39m');
@@ -50,6 +55,14 @@ var server = net.createServer(function(conn){
 /* 
   监听
 */
-server.listen(3008, function(){
-  console.log('\033[96m server listening on : 3008 \033[39m');
+server.listen(3010, function(){
+  console.log('\033[96m server listening on : 3010 \033[39m');
 })
+
+function broadcast(msg, exceptMyself){
+  for(var i in users){
+    if(!exceptMyself || i != nickname){
+      users[i].write(msg);
+    }
+  }
+}
