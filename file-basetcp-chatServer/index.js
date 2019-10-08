@@ -55,7 +55,7 @@ var server = net.createServer(function(conn){
 /* 
   监听
 */
-server.listen(3010, function(){
+server.listen(3011, function(){
   console.log('\033[96m server listening on : 3010 \033[39m');
 })
 
