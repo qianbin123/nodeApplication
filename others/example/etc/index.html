@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>模拟扫码枪</p>
+  <script>
+    /* 
+      需求：模拟扫码枪
+    */
+    let code = '';
+    
+    document.addEventListener("keypress", (e) => {
+      /* 
+        keyCode和which输出值都相同：keyCode兼容的浏览器版本更多一点
+      */
+      // console.log('keyCode', e.keyCode);
+      // console.log('which', e.which);
+
+      /* 
+        String.fromCharCode()将键盘的UTF-16代码转为字符
+      */
+      code += String.fromCharCode(e.keyCode);
+      if (e.keyCode == 13) {
+        /* 
+          发布自定义事件scanInput
+        */
+        let event = new CustomEvent("scanInput", { detail: code });
+        document.dispatchEvent(event);
+        // 清空code
+        code = "";
+      }
+    })
+
+    /* 
+      订阅scanInput
+    */
+    document.addEventListener("scanInput", (e) => {
+      alert(e.detail);
+    })
+  </script>
+</body>
+</html>
