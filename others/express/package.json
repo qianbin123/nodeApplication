@@ -1,0 +1,9 @@
+{
+  "name": "express-tweet",
+  "version": "0.0.1",
+  "dependencies": {
+    "ejs": "^0.4.3",
+    "express": "2.5.9",
+    "superagent": "0.3.0"
+  }
+}
