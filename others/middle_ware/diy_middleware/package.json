@@ -2,7 +2,7 @@
   "name": "test-middle",
   "version": "0.0.1",
   "devDependencies": {
-    "connect": "1.8.7"
+    "connect": "3.0.0"
   },
   "dependencies": {
     "mime-types": "^2.1.24"
