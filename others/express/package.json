@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "ejs": "^0.4.3",
-    "express": "2.5.9",
+    "express": "4.17.3",
     "superagent": "0.3.0"
   }
 }
